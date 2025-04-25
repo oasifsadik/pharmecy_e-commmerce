@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     @include('medWebsite.partials.head')
+    @yield('mw-css')
 </head>
 
 <body>
@@ -63,56 +64,32 @@
                 <button class="ltn__utilize-close">×</button>
             </div>
             <div class="mini-cart-product-area ltn__scrollbar">
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="{{ asset('medWeb') }}/img/product/1.png" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                @php
+                    $cartItems = Cart::content();
+                @endphp
+                @foreach ($cartItems as $item)
+                    <div class="mini-cart-item clearfix">
+                        <div class="mini-cart-img">
+                            <a href="#"><img src="{{ asset('storage/' . $item->options->thumbnail) }}" alt="Image"></a>
+                            <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                        </div>
+                        <div class="mini-cart-info">
+                            <h6><a href="#">{{ $item->name }}</a></h6>
+                            <span class="mini-cart-quantity">{{ $item->qty }} x {{ $item->price }}</span>
+                        </div>
                     </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Antiseptic Spray</a></h6>
-                        <span class="mini-cart-quantity">1 x $65.00</span>
-                    </div>
-                </div>
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="{{ asset('medWeb') }}/img/product/2.png" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Digital Stethoscope</a></h6>
-                        <span class="mini-cart-quantity">1 x $85.00</span>
-                    </div>
-                </div>
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="{{ asset('medWeb') }}/img/product/3.png" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Cosmetic Containers</a></h6>
-                        <span class="mini-cart-quantity">1 x $92.00</span>
-                    </div>
-                </div>
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="{{ asset('medWeb') }}/img/product/4.png" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Thermometer Gun</a></h6>
-                        <span class="mini-cart-quantity">1 x $68.00</span>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
             <div class="mini-cart-footer">
                 <div class="mini-cart-sub-total">
-                    <h5>Subtotal: <span>$310.00</span></h5>
+                    <h5>Subtotal: <span>{{ Cart::subtotal() }}</span></h5>
                 </div>
                 <div class="btn-wrapper">
-                    <a href="cart.html" class="theme-btn-1 btn btn-effect-1">View Cart</a>
-                    <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                    <a href="{{ route('cart.products') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+                    <a href="{{ route('checkout.page') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
                 </div>
-                <p>Free Shipping on All Orders Over $100!</p>
+                {{-- <p>Free Shipping on All Orders Over $100!</p> --}}
             </div>
 
         </div>

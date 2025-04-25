@@ -19,12 +19,19 @@
                 </div>
                 <!-- header-search-2 -->
                 <div class="header-search-2">
-                    <form id="#123" method="get"  action="#">
-                        <input type="text" name="search" value="" placeholder="Search here..."/>
+                    <form action="{{ route('shops') }}" method="GET" style="margin-bottom: 20px;">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search here..." />
                         <button type="submit">
                             <span><i class="icon-search"></i></span>
                         </button>
                     </form>
+
+                    {{-- <form id="#123" method="get"  action="#">
+                        <input type="text" name="search" value="" placeholder="Search here..."/>
+                        <button type="submit">
+                            <span><i class="icon-search"></i></span>
+                        </button>
+                    </form> --}}
                 </div>
             </div>
         </div>
@@ -104,9 +111,9 @@
                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                 <span class="mini-cart-icon">
                                     <i class="icon-shopping-cart"></i>
-                                    <sup>2</sup>
+                                    <sup>{{ Cart::content()->count() }}</sup>
                                 </span>
-                                <h6><span>Your Cart</span> <span class="ltn__secondary-color">$89.25</span></h6>
+                                <h6><span>Your Cart</span> <span class="ltn__secondary-color">{{ Cart::subtotal() }}</span></h6>
                             </a>
                         </div>
                     </li>

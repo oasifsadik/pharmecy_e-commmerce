@@ -8,3 +8,5 @@
     <link rel="stylesheet" href="{{ asset('medWeb') }}/css/style.css">
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('medWeb') }}/css/responsive.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> --}}
+

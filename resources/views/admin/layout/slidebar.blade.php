@@ -27,7 +27,7 @@
           </a><!-- br-menu-link -->
         </li><!-- br-menu-item -->
         <li class="br-menu-item">
-          <a href="#" class="br-menu-link with-sub {{ Request::routeIs('admin.orders') ||Request::routeIs('admin.orders.details') ? 'active' : '' }}">
+          <a href="#" class="br-menu-link with-sub {{ Request::routeIs('admin.product.stock') ||Request::routeIs('admin.product.stock.list') ? 'active' : '' }}">
             <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
             <span class="menu-item-label">Product Stock</span>
           </a><!-- br-menu-link -->
@@ -41,12 +41,44 @@
         <li class="br-menu-item">
           <a href="#" class="br-menu-link with-sub {{ Request::routeIs('admin.orders') ||Request::routeIs('admin.orders.details') ? 'active' : '' }}">
             <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
-            <span class="menu-item-label">Orders <sup class="badge badge-danger">badgh</sup></span>
+            <span class="menu-item-label">Orders</span>
           </a><!-- br-menu-link -->
           <ul class="br-menu-sub">
             <li class="sub-item"><a href="{{ route('admin.orders') }}" class="sub-link">Orders</a></li>
             <li class="sub-item"><a href="{{ route('admin.order.confirm.list') }}" class="sub-link">Confirm &amp; Order List</a></li>
             <li class="sub-item"><a href="{{ route('admin.orders.history') }}" class="sub-link">Shop &amp; Listing</a></li>
+          </ul>
+        </li>
+        <li class="br-menu-item">
+          <a href="#" class="br-menu-link with-sub {{ Request::routeIs('admin.ambulance') ||Request::routeIs('admin.ambulance.create') ? 'active' : '' }}">
+            <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+            <span class="menu-item-label">Ambulance</span>
+          </a><!-- br-menu-link -->
+          <ul class="br-menu-sub">
+            <li class="sub-item"><a href="{{ route('admin.ambulance.create') }}" class="sub-link">Create</a></li>
+            <li class="sub-item"><a href="{{ route('admin.ambulance') }}" class="sub-link">Ambulance &amp; List</a></li>
+          </ul>
+        </li>
+        <li class="br-menu-item">
+          <a href="#" class="br-menu-link with-sub {{ Request::routeIs('admin.ambulance.booking.List') ||Request::routeIs('admin.ambulance.booking.confirm.List') || Request::routeIs('admin.ambulance.booking.cancel.List')  ? 'active' : '' }}">
+            <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+            <span class="menu-item-label">Ambulance Booking</span>
+          </a><!-- br-menu-link -->
+          <ul class="br-menu-sub">
+            <li class="sub-item"><a href="{{ route('admin.ambulance.booking.List') }}" class="sub-link">List</a></li>
+            <li class="sub-item"><a href="{{ route('admin.ambulance.booking.confirm.List') }}" class="sub-link">Confirm &amp; List</a></li>
+            <li class="sub-item"><a href="{{ route('admin.ambulance.booking.cancel.List') }}" class="sub-link">Cancel &amp; List</a></li>
+          </ul>
+        </li>
+        <li class="br-menu-item">
+          <a href="#" class="br-menu-link with-sub {{ Request::routeIs('admin.lab.test.create') ||Request::routeIs('admin.lab.test.booking.list') ||Request::routeIs('admin.lab.test.booking.list') ? 'active' : '' }}">
+            <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+            <span class="menu-item-label">Lab Test</span>
+          </a><!-- br-menu-link -->
+          <ul class="br-menu-sub">
+            <li class="sub-item"><a href="{{ route('admin.lab.test.create') }}" class="sub-link">Create</a></li>
+            <li class="sub-item"><a href="{{ route('admin.lab.test') }}" class="sub-link">Test list</a></li>
+            <li class="sub-item"><a href="{{ route('admin.lab.test.booking.list') }}" class="sub-link">Test Booking &amp; List</a></li>
           </ul>
         </li>
       </ul><!-- br-sideleft-menu -->

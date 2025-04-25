@@ -81,7 +81,7 @@ class LoginController extends Controller
             'password' => Hash::make($request->password),
             'status' => 'Pending',
         ]);
-        return redirect()->route('doctor.login')->with('message', 'Registration successful! Please wait for admin approval.');
+        return redirect()->route('login.doctor')->with('message', 'Registration successful! Please wait for admin approval.');
     }
 
     public function doctorLogout(Request $request)

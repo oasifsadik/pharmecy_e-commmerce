@@ -21,7 +21,7 @@
             </div>
             <!-- END CATEGORY-MENU-LIST -->
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-8">
             <div class="col--- header-menu-column justify-content-center---">
                 <div class="header-menu header-menu-2 text-start">
                     <nav>
@@ -29,15 +29,16 @@
                             <ul>
                                 <li class="menu-icon"><a href="{{ route('home') }}">Home</a>
                                 </li>
-                                <li class="menu-icon"><a href="#">Shop</a>
-                                <li class="menu-icon"><a href="#">Doctor</a>
+                                <li class="menu-icon"><a href="{{ route('shops') }}">Shop</a>
+                                <li class="menu-icon"><a href="{{ route('doctors') }}">Doctor</a>
 
                                 </li>
 
                                 </li>
-                                <li class="menu-icon"><a href="#">Lab Test</a>
+                                <li class="menu-icon"><a href="{{ route('lab.test.services') }}">Lab Test</a>
                                 </li>
-                                <li class="menu-icon"><a href="#">Ambulance</a>
+                                <li class="menu-icon"><a href="{{ route('ambulance.services') }}">Ambulance</a>
+                                <li class="menu-icon"><a href="{{ route('prescription') }}">Prescription</a>
                                 </li>
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
@@ -47,9 +48,9 @@
             </div>
 
         </div>
-        <div class="col-lg-2 align-self-center d-none d-xl-block">
+        <div class="col-lg-1 align-self-center d-none d-xl-block">
             <div class="header-contact-info text-end">
-                <a class="font-weight-6 ltn__primary-color" href="tel:+123456789"><span class="ltn__secondary-color"><i class="icon-call font-weight-7"></i></span> +123-456-789-10</a>
+                <a class="font-weight-6 ltn__primary-color" href="tel:+123456789"><span class="ltn__secondary-color"><i class="icon-call font-weight-7"></i></span></a>
             </div>
         </div>
     </div>
