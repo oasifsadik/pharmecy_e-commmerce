@@ -8,12 +8,15 @@ use Illuminate\Http\Request;
 
 class PrescripMedicineUploadController extends Controller
 {
+    public function sd(){
+        return "sdvn";
+    }
     public function prescriptionStore(Request $request)
     {
         $data = [];
 
         if ($request->hasFile('fileUpload')) {
-            // Handle uploaded prescription
+            // Handle uploaded prescription vmfijnvijvn
             $file = $request->file('fileUpload');
             $path = $file->store('prescriptions');
 
