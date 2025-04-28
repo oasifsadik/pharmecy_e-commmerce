@@ -10,6 +10,8 @@ use App\Http\Controllers\User\WebsiteController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\Admin\AmbulanceController;
 use App\Http\Controllers\SslCommerzPaymentController;
+use App\Http\Controllers\User\PrescripMedicineUploadController;
+use App\Models\PrescriptMedicne;
 
 Route::get('/',[WebsiteController::class,'index'])->name('home');
 Route::get('/ambulance-services',[WebsiteController::class,'ambulanceServices'])->name('ambulance.services');
@@ -34,6 +36,7 @@ Route::get('User-order-deliver/{id}',[ProfileController::class,'userOrderDeliver
 Route::get('/category/{id}', [ProfileController::class, 'showProductsByCategory'])->name('category.products');
 
 Route::get('prescription', [WebsiteController::class, 'prescription'])->name('prescription');
+Route::post('prescription/store', [PrescripMedicineUploadController::class, 'prescriptionStore'])->name('prescription.store');
 
 
 

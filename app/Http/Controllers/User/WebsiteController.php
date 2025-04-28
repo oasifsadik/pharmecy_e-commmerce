@@ -10,6 +10,7 @@ use App\Models\Ambulance;
 use App\Models\ProductStock;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class WebsiteController extends Controller
 {
@@ -133,6 +134,10 @@ class WebsiteController extends Controller
     }
 
     public function prescription(){
-        return view('medWebsite.prescription.index');
+        if(Auth::check()){
+            return view('medWebsite.prescription.index');
+        }else{
+            return redirect()->route('login')->with('message', 'Please login first for upload prescription.');
+        }
     }
 }

@@ -62,14 +62,30 @@ Prescription
                         <!-- Prescription Upload Section -->
                         <div id="prescription-section" class="upload-section" style="display: none;">
                             <h4>Upload Prescription</h4>
-                            <form>
+                            <form action="{{ route('prescription.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="form-group">
-                                    <label for="phone">Phone Number</label>
-                                    <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+                                    <label for="phone" class="fw-bold">Phone Number <sup class="text-danger">(*)</sup></label>
+                                    <input type="tel" id="phone" class="form-control" value="{{ auth()->user()->phone ?? '' }}" placeholder="Enter your phone number">
                                 </div>
                                 <div class="form-group">
-                                    <label for="fileUpload">Upload File</label>
+                                    <label for="fileUpload">Upload File <sup class="text-danger">(*)</sup></label>
                                     <input type="file" id="fileUpload" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="fw-bold" for="medicine_duration">Medicine Duration (days) <sup class="text-danger">(*)</sup></label>
+                                    <input type="number" class="form-control" id="medicine_duration" name="medicine_duration" placeholder="Enter number of days" min="1" required>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label class="form-label d-block fw-bold"></label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="doseMorning[]" value="morning">
+                                        <label class="form-check-label">Remainder For medicine</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-sm btn-success" style="border-radius: 5px;">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -77,20 +93,21 @@ Prescription
                         <!-- Manual Upload Section -->
                         <div id="manual-section" class="upload-section" style="display: none;">
                             <h4 class="text-center">Enter Prescription Manually</h4>
-                            <form id="medicineForm">
+                            <form id="medicineForm" action="{{ route('prescription.store') }}" method="POST">
+                                @csrf
                                 <div id="medicineRows">
                                     <div class="row medicine-row mb-3">
                                         <!-- Medicine Name -->
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Medicine Name</label>
+                                                <label class="fw-bold">Medicine Name <sup class="text-danger">(*)</sup></label>
                                                 <input type="text" name="medicineName[]" class="form-control" placeholder="Enter medicine name">
                                             </div>
                                         </div>
 
                                         <!-- Medicine Doses -->
                                         <div class="col-md-5">
-                                            <label class="form-label d-block">Medicine Doses</label>
+                                            <label class="form-label d-block">Medicine Doses <sup class="text-danger">(*)</sup></label>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="checkbox" name="doseMorning[]" value="morning">
                                                 <label class="form-check-label">Morning</label>
@@ -110,8 +127,24 @@ Prescription
                                             <button type="button" class="btn btn-success btn-sm me-2 add-row">+</button>
                                             <button type="button" class="btn btn-danger btn-sm remove-row">🗑</button>
                                         </div>
-
                                     </div>
+                                </div>
+
+                                <!-- Fields that should not be duplicated -->
+                                <div class="form-group mt-3">
+                                    <label class="fw-bold" for="medicine_duration">Medicine Duration (days) <sup class="text-danger">(*)</sup></label>
+                                    <input type="number" class="form-control" id="medicine_duration" name="medicine_duration" placeholder="Enter number of days" min="1" required>
+                                </div>
+
+                                <div class="col-md-5 mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="reminder" value="1">
+                                        <label class="form-check-label">Reminder For Medicine</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <button type="submit" class="btn btn-sm btn-success" style="border-radius: 5px;">Submit</button>
                                 </div>
                             </form>
                         </div>
