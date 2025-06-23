@@ -101,70 +101,75 @@
                 <div class="col-12">
                     <div class="ltn__category-item ltn__category-item-6 text-center">
                         <div class="ltn__category-item-img">
-                            <a href="shop.html">
+                            <a href="{{ route('medicine.generic', ['name' => 'Fever']) }}">
                                 <i class="fas fa-notes-medical"></i>
                             </a>
                         </div>
                         <div class="ltn__category-item-name">
-                            <h6><a href="shop.html">Fever</a></h6>
+                            <h6><a href="{{ route('medicine.generic', ['name' => 'Fever']) }}">Fever</a></h6>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="ltn__category-item ltn__category-item-6 text-center">
-                        <div class="ltn__category-item-img">
-                            <a href="shop.html">
-                                <i class="fas fa-box-tissue"></i>
-                            </a>
-                        </div>
-                        <div class="ltn__category-item-name">
-                            <h6><a href="shop.html">Headache</a></h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="ltn__category-item ltn__category-item-6 text-center">
-                        <div class="ltn__category-item-img">
-                            <a href="shop.html">
-                                <i class="fas fa-pump-medical"></i>
-                            </a>
-                        </div>
-                        <div class="ltn__category-item-name">
-                            <h6><a href="shop.html">Diarrhea</a></h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="ltn__category-item ltn__category-item-6 text-center">
-                        <div class="ltn__category-item-img">
-                            <a href="shop.html">
-                                <i class="fas fa-bong"></i>
-                            </a>
-                        </div>
-                        <div class="ltn__category-item-name">
-                            <h6><a href="shop.html">Eczema</a></h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="ltn__category-item ltn__category-item-6 text-center">
-                        <div class="ltn__category-item-img">
-                            <a href="shop.html">
-                                <i class="fas fa-tooth"></i>
-                            </a>
-                        </div>
-                        <div class="ltn__category-item-name">
-                            <h6><a href="shop.html">Pregnancy</a></h6>
-                        </div>
-                    </div>
-                </div>
+
+    <div class="col-12">
+        <div class="ltn__category-item ltn__category-item-6 text-center">
+            <div class="ltn__category-item-img">
+                <a href="{{ route('medicine.generic', ['name' => 'Headache']) }}">
+                    <i class="fas fa-box-tissue"></i>
+                </a>
             </div>
+            <div class="ltn__category-item-name">
+                <h6><a href="{{ route('medicine.generic', ['name' => 'Headache']) }}">Headache</a></h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="ltn__category-item ltn__category-item-6 text-center">
+            <div class="ltn__category-item-img">
+                <a href="{{ route('medicine.generic', ['name' => 'Diarrhea']) }}">
+                    <i class="fas fa-pump-medical"></i>
+                </a>
+            </div>
+            <div class="ltn__category-item-name">
+                <h6><a href="{{ route('medicine.generic', ['name' => 'Diarrhea']) }}">Diarrhea</a></h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="ltn__category-item ltn__category-item-6 text-center">
+            <div class="ltn__category-item-img">
+                <a href="{{ route('medicine.generic', ['name' => 'Eczema']) }}">
+                    <i class="fas fa-bong"></i>
+                </a>
+            </div>
+            <div class="ltn__category-item-name">
+                <h6><a href="{{ route('medicine.generic', ['name' => 'Eczema']) }}">Eczema</a></h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="ltn__category-item ltn__category-item-6 text-center">
+            <div class="ltn__category-item-img">
+                <a href="{{ route('medicine.generic', ['name' => 'Pregnancy']) }}">
+                    <i class="fas fa-tooth"></i>
+                </a>
+            </div>
+            <div class="ltn__category-item-name">
+                <h6><a href="{{ route('medicine.generic', ['name' => 'Pregnancy']) }}">Pregnancy</a></h6>
+            </div>
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
     <!-- CATEGORY AREA END -->
 
     <!-- PRODUCT AREA START (product-item-3) -->
-    <div class="ltn__product-area ltn__product-gutter  no-product-ratting pt-20--- pt-65  pb-70">
+    {{-- <div class="ltn__product-area ltn__product-gutter  no-product-ratting pt-20--- pt-65  pb-70">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -476,7 +481,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- PRODUCT AREA END -->
 
     <!-- COUNTDOWN AREA START -->
@@ -507,7 +512,7 @@
     <!-- COUNTDOWN AREA END -->
 
     <!-- PRODUCT AREA START (product-item-3) -->
-    @foreach ($categories as $category)
+    {{-- @foreach ($categories as $category)
     <div class="ltn__product-area ltn__product-gutter no-product-ratting pt-115 pb-70---">
         <div class="container">
             <div class="row">
@@ -579,7 +584,83 @@
             </div>
         </div>
     </div>
+@endforeach --}}
+@foreach ($categories as $category)
+<div class="ltn__product-area ltn__product-gutter no-product-ratting pt-115 pb-70---">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area ltn__section-title-2 text-center">
+                    <h1 class="section-title">{{ $category->category_name }}</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ltn__tab-product-slider-one-active--- slick-arrow-1">
+            @foreach ($category->product as $item)
+                @foreach ($item->Stock as $stock)
+                <div class="col-lg-3--- col-md-3 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-2 text-left">
+                        <div class="product-img">
+                            <a href="{{ route('singleProduct', $stock->id) }}">
+                                <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="#">
+                            </a>
+                            <div class="product-badge">
+                                <ul>
+                                    <li class="sale-badge">New</li>
+                                </ul>
+                            </div>
+                            <div class="product-hover-action">
+                                <ul>
+                                    <li>
+                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
+                                            <i class="far fa-eye"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
+                                            <i class="far fa-heart"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-ratting">
+                                <ul>
+                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                    <li><a href="#"><i class="far fa-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <h2 class="product-title">
+                                <a href="{{ route('singleProduct', $stock->id) }}">{{ $stock->product->product_name }}</a>
+                            </h2>
+                            <div class="product-price">
+                                @if($stock->discount_price)
+                                    <span>{{ $stock->discount_price }}</span>
+                                    <del>{{ $stock->selling_price }}</del>
+                                @else
+                                    <span>{{ $stock->selling_price }}</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            @endforeach
+        </div>
+    </div>
+</div>
 @endforeach
+
 
     <!-- PRODUCT AREA END -->
 

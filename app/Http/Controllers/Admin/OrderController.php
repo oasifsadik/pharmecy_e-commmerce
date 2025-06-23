@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('status','Pending')->paginate(20);
+        $orders = Order::where('status','Pending')->where('order_type', 'normal')->paginate(20);
         return view('admin.orders.order', compact('orders'));
     }
 
@@ -46,26 +46,40 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Order status updated successfully.');
     }
     public function orderHistory(Request $request)
-{
-    $query = Order::query();
+    {
+        $query = Order::query();
 
-    if ($request->has('search') && !empty($request->search)) {
-        $searchTerm = $request->search;
-        $query->where(function($q) use ($searchTerm) {
-            $q->where('id', 'like', "%{$searchTerm}%")
-              ->orWhere(DB::raw('CONCAT(first_name, " ", last_name)'), 'like', "%{$searchTerm}%");
-        });
+        if ($request->has('search') && !empty($request->search)) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('id', 'like', "%{$searchTerm}%")
+                ->orWhere(DB::raw('CONCAT(first_name, " ", last_name)'), 'like', "%{$searchTerm}%");
+            });
+        }
+
+        if ($request->has('status') && !empty($request->status)) {
+            $query->where('status', $request->status);
+        }
+
+        $orders = $query->paginate(10);
+
+        return view('admin.orders.orderHistory', compact('orders'));
     }
 
-    if ($request->has('status') && !empty($request->status)) {
-        $query->where('status', $request->status);
+    public function prescripIndex(){
+        $orders = Order::where('status','Pending')->where('order_type', 'prescribtion')->paginate(20);
+        return view('admin.prescribOrder.index',compact('orders'));
+    }
+    public function prescribConfirmOrderList(){
+        $confirmList = Order::where('status','Order Confirmed')->where('order_type', 'prescribtion')->paginate(20);
+        // dd($orders);
+        return view('admin.prescribOrder.confirmList',compact('confirmList'));
     }
 
-    $orders = $query->paginate(10);
-
-    return view('admin.orders.orderHistory', compact('orders'));
-}
-
+    public function prescripPrdersDetails($id){
+        $orderDetails = Order::with('prescribMedicine')->find($id);
+        return view('admin.prescribOrder.orderDetails',compact('orderDetails'));
+    }
 
 
 }

@@ -91,63 +91,55 @@ Prescription
                         </div>
 
                         <!-- Manual Upload Section -->
-                        <div id="manual-section" class="upload-section" style="display: none;">
-                            <h4 class="text-center">Enter Prescription Manually</h4>
-                            <form id="medicineForm" action="{{ route('prescription.store') }}" method="POST">
-                                @csrf
-                                <div id="medicineRows">
-                                    <div class="row medicine-row mb-3">
-                                        <!-- Medicine Name -->
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label class="fw-bold">Medicine Name <sup class="text-danger">(*)</sup></label>
-                                                <input type="text" name="medicineName[]" class="form-control" placeholder="Enter medicine name">
-                                            </div>
-                                        </div>
+                        <!-- Manual Upload Section -->
+<div id="manual-section" class="upload-section" style="display: none;">
+    <h4 class="text-center">Enter Prescription Manually</h4>
+    <form id="medicineForm" action="{{ route('prescription.store') }}" method="POST">
+        @csrf
+        <div id="medicineRows">
+            <div class="medicine-row row mb-3" data-index="0">
+                <!-- Medicine Name -->
+                <div class="col-md-4">
+                    <input list="medicine-options" name="medicines[0][name]" class="form-control medicine-name" placeholder="Medicine Name" required>
+                    <datalist id="medicine-options"></datalist>
+                    <div class="price-info text-muted mt-1"></div>
+                </div>
 
-                                        <!-- Medicine Doses -->
-                                        <div class="col-md-5">
-                                            <label class="form-label d-block">Medicine Doses <sup class="text-danger">(*)</sup></label>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" name="doseMorning[]" value="morning">
-                                                <label class="form-check-label">Morning</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" name="doseAfternoon[]" value="afternoon">
-                                                <label class="form-check-label">Afternoon</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" name="doseNight[]" value="night">
-                                                <label class="form-check-label">Night</label>
-                                            </div>
-                                        </div>
+                <!-- Doses -->
+                <div class="col-md-5">
+                    <label>Medicine Doses:</label><br>
+                    <label><input type="checkbox" name="medicines[0][doses][morning]" class="dose-checkbox" data-dose="morning" value="1"> Morning</label>
+                    <label><input type="checkbox" name="medicines[0][doses][afternoon]" class="dose-checkbox" data-dose="afternoon" value="1"> Afternoon</label>
+                    <label><input type="checkbox" name="medicines[0][doses][night]" class="dose-checkbox" data-dose="night" value="1"> Night</label>
+                </div>
 
-                                        <!-- Action Buttons -->
-                                        <div class="col-md-2 d-flex align-items-end">
-                                            <button type="button" class="btn btn-success btn-sm me-2 add-row">+</button>
-                                            <button type="button" class="btn btn-danger btn-sm remove-row">🗑</button>
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- Buttons -->
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-success add-row">+</button>
+                    <button type="button" class="btn btn-danger remove-row">−</button>
+                </div>
+            </div>
+        </div>
 
-                                <!-- Fields that should not be duplicated -->
-                                <div class="form-group mt-3">
-                                    <label class="fw-bold" for="medicine_duration">Medicine Duration (days) <sup class="text-danger">(*)</sup></label>
-                                    <input type="number" class="form-control" id="medicine_duration" name="medicine_duration" placeholder="Enter number of days" min="1" required>
-                                </div>
+        <!-- Fields that should not be duplicated -->
+        <div class="form-group mt-3">
+            <label class="fw-bold" for="medicine_duration">Medicine Duration (days) <sup class="text-danger">(*)</sup></label>
+            <input type="number" class="form-control" id="medicine_duration" name="medicine_duration" placeholder="Enter number of days" min="1" required>
+        </div>
 
-                                <div class="col-md-5 mt-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="reminder" value="1">
-                                        <label class="form-check-label">Reminder For Medicine</label>
-                                    </div>
-                                </div>
+        <div class="col-md-5 mt-2">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="reminder" value="1">
+                <label class="form-check-label">Reminder For Medicine</label>
+            </div>
+        </div>
 
-                                <div class="form-group mt-3">
-                                    <button type="submit" class="btn btn-sm btn-success" style="border-radius: 5px;">Submit</button>
-                                </div>
-                            </form>
-                        </div>
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-sm btn-success" style="border-radius: 5px;">Submit</button>
+        </div>
+    </form>
+</div>
+
                     </div>
                 </div>
             </div>
@@ -180,26 +172,99 @@ Prescription
         document.getElementById('prescription-section').style.display = (type === 'prescription') ? 'block' : 'none';
         document.getElementById('manual-section').style.display = (type === 'manual') ? 'block' : 'none';
     }
-</script>
-<script>
+
     document.addEventListener("DOMContentLoaded", function () {
         const container = document.getElementById("medicineRows");
 
-        container.addEventListener("click", function (e) {
-            // Add new row
-            if (e.target.classList.contains("add-row")) {
-                const newRow = e.target.closest(".medicine-row").cloneNode(true);
+        async function fetchMedicineSuggestions(query) {
+            const response = await fetch(`/medicines/search?q=${encodeURIComponent(query)}`);
+            return await response.json();
+        }
 
-                // Clear input values in cloned row
+        async function fetchMedicineDetails(name) {
+            const response = await fetch(`/medicines/details?name=${encodeURIComponent(name)}`);
+            return await response.json();
+        }
+
+        container.addEventListener("input", async function (e) {
+            if (e.target.classList.contains("medicine-name")) {
+                const input = e.target;
+                const datalist = document.getElementById("medicine-options");
+                const query = input.value;
+
+                if (query.length > 1) {
+                    const results = await fetchMedicineSuggestions(query);
+                    datalist.innerHTML = "";
+                    results.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.product_name;
+                        datalist.appendChild(option);
+                    });
+                }
+            }
+        });
+
+        container.addEventListener("change", async function (e) {
+            // When medicine name is selected or dose is toggled
+            if (e.target.classList.contains("medicine-name") || e.target.classList.contains("dose-checkbox")) {
+                const row = e.target.closest(".medicine-row");
+                const nameInput = row.querySelector(".medicine-name");
+                const selectedMedicine = nameInput.value;
+
+                if (!selectedMedicine) return;
+
+                const details = await fetchMedicineDetails(selectedMedicine);
+                const duration = parseInt(document.getElementById("medicine_duration").value || 1);
+
+                if (details) {
+                    let total = 0;
+                    let prices = {
+                        morning: details.morning_price || 0,
+                        afternoon: details.afternoon_price || 0,
+                        night: details.night_price || 0,
+                    };
+
+                    ['morning', 'afternoon', 'night'].forEach(dose => {
+                        const checkbox = row.querySelector(`input[data-dose="${dose}"]`);
+                        if (checkbox?.checked) {
+                            total += prices[dose] * duration;
+                        }
+                    });
+
+                    const info = `
+                        Morning: ${prices.morning} TK,
+                        Afternoon: ${prices.afternoon} TK,
+                        Night: ${prices.night} TK
+                        → Total (${duration} days): ${total.toFixed(2)} TK
+                    `;
+                    row.querySelector('.price-info').innerText = info;
+                }
+            }
+        });
+
+        container.addEventListener("click", function (e) {
+            if (e.target.classList.contains("add-row")) {
+                const rows = container.querySelectorAll(".medicine-row");
+                const lastRow = rows[rows.length - 1];
+                const newRow = lastRow.cloneNode(true);
+                const newIndex = rows.length;
+
+                newRow.setAttribute('data-index', newIndex);
                 newRow.querySelectorAll("input").forEach(input => {
                     if (input.type === "text") input.value = "";
                     if (input.type === "checkbox") input.checked = false;
+
+                    const name = input.getAttribute("name");
+                    if (name) {
+                        const updatedName = name.replace(/\[\d+\]/g, `[${newIndex}]`);
+                        input.setAttribute("name", updatedName);
+                    }
                 });
 
+                newRow.querySelector(".price-info").innerText = "";
                 container.appendChild(newRow);
             }
 
-            // Remove row
             if (e.target.classList.contains("remove-row")) {
                 const rows = container.querySelectorAll(".medicine-row");
                 if (rows.length > 1) {
@@ -211,5 +276,5 @@ Prescription
         });
     });
 </script>
-
 @endsection
+

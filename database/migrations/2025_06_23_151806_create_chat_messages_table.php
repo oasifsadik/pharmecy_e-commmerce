@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prescript_medicnes', function (Blueprint $table) {
+        Schema::create('chat_messages', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('order_id');
-            $table->string('type');
-            $table->string('phone')->nullable();
+            $table->unsignedBigInteger('appointment_id');
+            $table->unsignedBigInteger('doctor_id');
+            $table->unsignedBigInteger('user_id');
+            $table->enum('sender', ['doctor', 'patient']);
+            $table->text('text')->nullable();
             $table->string('file')->nullable();
-            $table->json('medicines')->nullable();
-            $table->integer('medicine_duration')->nullable();
-            $table->boolean('reminder')->default(false);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prescript_medicnes');
+        Schema::dropIfExists('chat_messages');
     }
 };

@@ -64,6 +64,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function() {
 
         Route::get('lab-test-booking-list',[LabTestController::class,'labTestBookingList'])->name('admin.lab.test.booking.list');
         Route::get('lab-test-booking-view/{id}',[LabTestController::class,'labTestBookingView'])->name('admin.lab.test.booking.view');
+        Route::post('/send-booking-mail/{id}', [LabTestController::class, 'sendMail'])->name('send.booking.mail');
 
         //end Product Stock
         Route::get('orders',[OrderController::class,'index'])->name('admin.orders');
@@ -74,6 +75,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function() {
         Route::put('/admin/orders/{id}/update-status', [OrderController::class, 'updateOrderStatus'])->name('admin.orders.updateStatus');
         Route::get('/admin/orders/history', [OrderController::class, 'orderHistory'])->name('admin.orders.history');
 
-
+        Route::get('prescrip-orders',[OrderController::class,'prescripIndex'])->name('admin.prescrip.orders');
+        Route::get('prescrip-orders-details/{id}',[OrderController::class,'prescripPrdersDetails'])->name('admin.prescrip.orders.details');
+        Route::get('prescrib-confirm-order/list',[OrderController::class,'prescribConfirmOrderList'])->name('admin.order.confirm.list.prescrib');
     });
 });

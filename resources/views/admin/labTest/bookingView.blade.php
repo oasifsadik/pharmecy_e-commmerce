@@ -127,11 +127,16 @@ Product Show
                         </tr>
                     </thead>
                 </table>
+                <form action="{{ route('send.booking.mail', $booking->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-primary mt-3">Send Mail to User</button>
+                </form>
 
             </div><!-- table-wrapper -->
 
 
-        </div><!-- br-section-wrapper -->
+        </div>
+        <!-- br-section-wrapper -->
     </div>
     @include('admin.layout.footer')
 </div>

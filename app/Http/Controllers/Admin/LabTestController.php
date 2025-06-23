@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\LabTest;
+use App\Models\LabBooking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\LabBooking;
+use Illuminate\Support\Facades\Mail;
 
 class LabTestController extends Controller
 {
@@ -141,6 +142,7 @@ class LabTestController extends Controller
 
     public function labTestBookingList(){
         $bookingList = LabBooking::get();
+        // dd($bookingList);
         return view('admin.labTest.bookingList',compact('bookingList'));
     }
 
@@ -148,4 +150,25 @@ class LabTestController extends Controller
         $booking = LabBooking::findOrFail($id);
         return view('admin.labTest.bookingView',compact('booking'));
     }
+
+    public function sendMail($id)
+{
+    $booking = LabBooking::with('labTest')->findOrFail($id);
+
+    // Send mail to user
+    Mail::send('email.bookingClient', ['data' => $booking], function ($message) use ($booking) {
+        $message->from('info@example.com', 'Lab Center');
+        $message->to($booking->email);
+        $message->subject('Your Lab Test Booking Receipt');
+    });
+
+    // Send mail to admin
+    Mail::send('email.bookingAdmin', ['data' => $booking], function ($message) {
+        $message->from('info@example.com', 'Lab Center');
+        $message->to('admin@example.com'); // Change to actual admin email
+        $message->subject('New Lab Test Booking');
+    });
+
+    return redirect()->back()->with('success', 'Booking mail sent to user and admin successfully!');
+}
 }

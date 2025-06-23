@@ -11,11 +11,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ltn__breadcrumb-inner">
-                    <h1 class="page-title">Shops</h1>
+                    <h1 class="page-title">{{ $name }}</h1>
                     <div class="ltn__breadcrumb-list">
                         <ul>
                             <li><a href="{{ route('home') }}"><span class="ltn__secondary-color"><i class="fas fa-home"></i></span> Home</a></li>
-                            <li>Shops</li>
+                            <li>{{ $name }}</li>
                         </ul>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                                         <div class="ltn__product-item ltn__product-item-3 text-center">
                                             <div class="product-img">
                                                 <a href="{{ route('singleProduct', $stock->id) }}">
-                                                    <img src="{{ asset('storage/' . $stock->product->thumbnail) }}" alt="#">
+                                                    <img src="{{ asset('storage/' . $stock->product->thumbnail) }}" alt="{{ $stock->product->product_name }}">
                                                 </a>
                                                 <div class="product-badge">
                                                     <ul>
@@ -121,6 +121,12 @@
                                     </div>
                                 @endforeach
                             </div>
+
+                            {{-- Add pagination links --}}
+                            {{-- <div class="mt-4">
+                                {{ $products->links() }}
+                            </div> --}}
+
 
                             {{-- Pagination --}}
                             {{-- <div class="text-center mt-4">
@@ -508,18 +514,17 @@
                 <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
                     <!-- Category Widget -->
                     <div class="widget ltn__menu-widget">
-                            <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
-                            <ul>
-                                @foreach ($categories as $category)
-                                    <li>
-                                        <a href="{{ route('shop.category', ['id' => $category->id]) }}">
-                                            {{ $category->category_name }} 
-                                            <span><i class="fas fa-long-arrow-alt-right"></i></span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                        <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
+                        <ul>
+                            <li><a href="portfolio-details.html">Hand Sanitizer <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                            <li><a href="portfolio-details.html">Lab N95 Face Mask <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                            <li><a href="portfolio-details.html">Hand Gloves <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                            <li><a href="portfolio-details.html">Medical Equipment <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                            <li><a href="portfolio-details.html">New Arrival Product <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                            <li><a href="portfolio-details.html">Uncategorized <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                            <li><a href="portfolio-details.html">Special Offers <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                        </ul>
+                    </div>
 
                 </aside>
             </div>

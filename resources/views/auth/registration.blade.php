@@ -83,8 +83,8 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="country-select clearfix">
+                            <div class="col-md-6">
+                                <div class="country-select clearfix ">
                                     <label>Country <span class="required">*</span></label>
                                     <select class="nice-select wide" name="country" required>
                                         <option data-display="Bangladesh">Bangladesh</option>

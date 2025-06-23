@@ -76,6 +76,7 @@ class CheckoutController extends Controller
             'payment_method' => $request->input('payment_method'),
             'status' => 'Pending',
             'tracking_no' => Auth::user()->first_name . rand(1111,0000),
+            'order_type' => 'normal',
         ]);
 
         $subtotalFormatted = Cart::priceTotal();

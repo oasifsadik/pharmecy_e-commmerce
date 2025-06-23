@@ -50,6 +50,16 @@
           </ul>
         </li>
         <li class="br-menu-item">
+          <a href="#" class="br-menu-link with-sub {{ Request::routeIs('admin.prescrip.orders') ||Request::routeIs('admin.orders.details') ? 'active' : '' }}">
+            <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+            <span class="menu-item-label">Prescrip Medicine</span>
+          </a><!-- br-menu-link -->
+          <ul class="br-menu-sub">
+            <li class="sub-item"><a href="{{ route('admin.prescrip.orders') }}" class="sub-link">Prescrip Orders</a></li>
+            <li class="sub-item"><a href="{{ route('admin.order.confirm.list.prescrib') }}" class="sub-link">Prescrip Confirm Orders</a></li>
+          </ul>
+        </li>
+        <li class="br-menu-item">
           <a href="#" class="br-menu-link with-sub {{ Request::routeIs('admin.ambulance') ||Request::routeIs('admin.ambulance.create') ? 'active' : '' }}">
             <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
             <span class="menu-item-label">Ambulance</span>

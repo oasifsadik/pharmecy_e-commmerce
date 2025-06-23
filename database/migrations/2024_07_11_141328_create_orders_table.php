@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('payment_id')->nullable();
             $table->enum('status',['Pending','Order Confirmed','Shipped','Canceled','Delivered'])->default('Pending');
             $table->string('tracking_no');
+            $table->enum('order_type',['prescribtion','normal'])->nullable()->default('normal');
             $table->timestamps();
         });
     }

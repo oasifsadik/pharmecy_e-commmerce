@@ -82,7 +82,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" title="Book Appointment">
+                                                        <a href="{{ route('doctors.appointment.form', $doctor->id) }}" title="Book Appointment">
                                                             <i class="fas fa-calendar-check"></i>
                                                         </a>
                                                     </li>

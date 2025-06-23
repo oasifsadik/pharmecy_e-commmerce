@@ -10,6 +10,7 @@ class PrescriptMedicne extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
+        'order_id',
         'type',
         'phone',
         'file',
@@ -22,4 +23,8 @@ class PrescriptMedicne extends Model
         'medicines' => 'array',
         'reminder' => 'boolean',
     ];
+
+    public function orders(){
+        return $this->belongsTo(Order::class,'order_id','id');
+    }
 }

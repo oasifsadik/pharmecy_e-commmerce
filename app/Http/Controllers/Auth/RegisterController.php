@@ -49,6 +49,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'unid_user_id' => ['nullable'],
             'country' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
@@ -73,7 +74,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $base = strtolower($data['first_name']);
+        $randomNumber = random_int(1000, 9999);
+        $uniqueId = $base . '-' . $randomNumber;
+        while (User::where('unid_user_id', $uniqueId)->exists()) {
+            $randomNumber = random_int(1000, 9999);
+            $uniqueId = $base . '-' . $randomNumber;
+        }
         return User::create([
+            'unid_user_id' => $uniqueId,
             'country' => $data['country'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],

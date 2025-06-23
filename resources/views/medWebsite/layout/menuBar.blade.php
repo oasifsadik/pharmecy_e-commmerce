@@ -1,6 +1,8 @@
 @php
-    $categories = App\Models\Category::get();
+    use App\Models\Category;
+    $categories = Category::all();
 @endphp
+
 <div class="container">
     <div class="row">
         <div class="col-lg-3 align-self-center">
@@ -9,11 +11,11 @@
                 <div class="ltn__category-menu-title">
                     <h2 class="section-bg-1--- ltn__secondary-bg text-color-white">categories</h2>
                 </div>
-                <div class="ltn__category-menu-toggle ltn__one-line-active">
+                <div class="ltn__category-menu-toggle">
                     <ul>
                         @foreach ($categories as $category)
-                        <li class="ltn__category-menu-item ltn__category-menu-drop">
-                            <a href="shop.html"><i class="icon-shopping-bags"></i>{{ $category->category_name }}</a>
+                        <li class="ltn__category-menu-item">
+                            <a href="{{ route('shop.category', ['id' => $category->id]) }}"><i class="icon-shopping-bags"></i>{{ $category->category_name ?? '' }}</a>
                         </li>
                         @endforeach
                     </ul>

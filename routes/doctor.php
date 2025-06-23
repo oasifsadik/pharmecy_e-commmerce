@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\Doctor\Auth\LoginController;
-use App\Http\Controllers\Doctor\DoctorDashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Doctor\ChatController;
+use App\Http\Controllers\Admin\AppointmentController;
+use App\Http\Controllers\Doctor\Auth\LoginController;
+use App\Http\Controllers\Doctor\DoctorChatController;
+use App\Http\Controllers\Doctor\DoctorDashboardController;
 
 Route::group(['prefix' => 'doctor', 'middleware' => ['web']], function() {
     // Route::get('vvv', function(){
@@ -17,6 +20,19 @@ Route::group(['prefix' => 'doctor', 'middleware' => ['web']], function() {
     Route::middleware(['auth:doctor'])->group(function()
     {
         Route::get('dashboard', [DoctorDashboardController::class,'index'])->name('doctor.dashboard');
+        Route::get('appoinment-list', [AppointmentController::class,'appoinmentList'])->name('doctor.appoinment.list');
+        // In web.php
+        Route::get('prescribe', [AppointmentController::class, 'create'])->name('doctor.prescribe.create');
+        Route::post('prescribe', [AppointmentController::class, 'store'])->name('doctor.prescribe.store');
+        Route::get('chat', [ChatController::class, 'index'])->name('doctor.chat');
+
+
+        // Send message
+        Route::post('/chat/send', [DoctorChatController::class, 'sendMessage'])->name('doctor.chat.send');
+
+        // Fetch messages
+        Route::get('/chat/messages/{appointment}', [DoctorChatController::class, 'fetchMessages']);
+
 
 
     });

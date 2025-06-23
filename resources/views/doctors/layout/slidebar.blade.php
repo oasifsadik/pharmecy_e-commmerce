@@ -15,9 +15,23 @@
             <span class="menu-item-label">Appoinment</span>
           </a><!-- br-menu-link -->
           <ul class="br-menu-sub">
-            <li class="sub-item"><a href="" class="sub-link">Appoinment List</a></li>
+            <li class="sub-item"><a href="{{ route('doctor.appoinment.list') }}" class="sub-link">Appoinment List</a></li>
           </ul>
         </li>
+        <li class="br-menu-item">
+          <a href="{{ route('doctor.prescribe.create') }}" class="br-menu-link {{ Request::routeIs('doctor.prescribe.create') ? 'active' : '' }}">
+            <i class="menu-item-icon icon ion-ios-medkit-outline tx-24"></i>
+            <span class="menu-item-label">Prescribe</span>
+          </a>
+        </li>
+
+        <li class="br-menu-item">
+          <a href="{{ route('doctor.chat') }}" class="br-menu-link {{ Request::routeIs('doctor.chat') ? 'active' : '' }}">
+            <i class="menu-item-icon fas fa-comments tx-24"></i>
+            <span class="menu-item-label">Chat with Patients</span>
+          </a>
+        </li>
+
       </ul><!-- br-sideleft-menu -->
       <br>
     </div>

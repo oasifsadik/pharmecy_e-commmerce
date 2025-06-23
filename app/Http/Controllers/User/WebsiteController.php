@@ -24,6 +24,38 @@ class WebsiteController extends Controller
         // return view('website.home',compact('categories','products'));
         return view('medWebsite.home',compact('categories','products'));
     }
+    public function showByGeneric($name)
+{
+    // Get all product stocks where related product's generic_name matches $name
+    $products = \App\Models\ProductStock::with('product')
+        ->whereHas('product', function ($q) use ($name) {
+            $q->where('generic_name', 'like', '%' . $name . '%')
+              ; // only active products
+        })
+        ->paginate(20);
+        // dd($products);
+    return view('medWebsite.shop.generic-products', compact('products', 'name'));
+}
+public function showByCategory($id)
+{
+    // Fetch all categories for sidebar (optional: you can cache or reuse)
+    $categories = Category::all();
+
+    // Fetch products with product stock filtered by category ID and active products only
+    $products = ProductStock::with('product')
+        ->whereHas('product', function ($q) use ($id) {
+            $q->where('cat_id', $id); // only active products
+        })
+        ->paginate(20);
+
+    // Get category name for title, breadcrumb, etc.
+    $categoryName = Category::find($id)->name ?? 'Category';
+
+    return view('medWebsite.shop.index', compact('categories', 'products', 'categoryName'));
+}
+
+
+
     public function ambulanceServices(){
         $ambulances = Ambulance::where('status', 'Active')->latest()->get();
         return view('medWebsite.ambulance.index',compact('ambulances'));
@@ -108,6 +140,10 @@ class WebsiteController extends Controller
         $doctors = Doctor::where('status', 'Approved')->latest()->get();
         return view('medWebsite.doctor.index',compact('doctors'));
     }
+    public function doctorAppointment($id){
+        $doctor = Doctor::where('status', 'Approved')->find($id);
+        return view('medWebsite.doctor.doctorAppointment',compact('doctor'));
+    }
 
     public function shops(Request $request)
     {
@@ -129,6 +165,7 @@ class WebsiteController extends Controller
         }
 
         $products = $query->inRandomOrder()->paginate(50);
+        // dd($products);
 
         return view('medWebsite.shop.index', compact('categories', 'products'));
     }
@@ -140,4 +177,35 @@ class WebsiteController extends Controller
             return redirect()->route('login')->with('message', 'Please login first for upload prescription.');
         }
     }
+    public function search(Request $request)
+{
+    $query = $request->query('q');
+
+    return Product::where('product_name', 'like', "%{$query}%")
+        ->select('product_name')
+        ->limit(10)
+        ->get();
+}
+
+public function details(Request $request)
+{
+    $name = $request->query('name');
+
+    $product = Product::where('product_name', $name)->first();
+
+    if (!$product) {
+        return response()->json(null, 404);
+    }
+
+    $stock = ProductStock::where('product_id', $product->id)->latest()->first();
+
+    // Assuming you calculate dose prices manually or via extra fields
+    return response()->json([
+        'morning_price'   => $stock->selling_price / 3 ?? 0,
+        'afternoon_price' => $stock->selling_price / 3 ?? 0,
+        'night_price'     => $stock->selling_price / 3 ?? 0,
+        'total_price'     => $stock->selling_price ?? 0,
+    ]);
+}
+
 }

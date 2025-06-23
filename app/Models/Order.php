@@ -27,10 +27,14 @@ class Order extends Model
         'payment_id',
         'status',
         'tracking_no',
+        'order_type',
     ];
 
     public function items()
         {
             return $this->hasMany(OrderItem::class);
         }
+    public function prescribMedicine(){
+        return $this->hasMany(PrescriptMedicne::class);
+    }
 }
