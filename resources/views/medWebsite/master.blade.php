@@ -391,7 +391,7 @@
     <!-- preloader area end -->
 
     @include('medWebsite.partials.footerJs')
-
+   @yield('scripts')
 </body>
 
 </html>

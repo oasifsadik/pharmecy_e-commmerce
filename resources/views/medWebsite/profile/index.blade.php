@@ -118,7 +118,7 @@
                         <a href="{{ route('user.order.deliver', auth()->user()->id) }}" class="sidebar-link {{ Request::routeIs('user.order.deliver', auth()->user()->id) ? 'active':'' }}">Deliver Order</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{ route('user.order.deliver', auth()->user()->id) }}" class="sidebar-link {{ Request::routeIs('user.order.deliver', auth()->user()->id) ? 'active':'' }}">Message</a>
+                        <a href="{{ route('patient.chat', auth()->user()->id) }}" class="sidebar-link {{ Request::routeIs('user.order.deliver', auth()->user()->id) ? 'active':'' }}">Message</a>
                     </li>
                     {{-- <li class="list-group-item">
                         <a href="#" class="sidebar-link">Logout</a>

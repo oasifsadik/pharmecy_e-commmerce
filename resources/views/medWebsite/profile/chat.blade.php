@@ -134,7 +134,7 @@
 
                 <!-- Message Input -->
                 @if($activeAppointment)
-                    <form id="chatForm" method="POST" action="{{ route('patient.chat.send') }}" class="d-flex">
+                    <form id="chatForm" class="d-flex">
                         @csrf
                         <input type="hidden" name="patient_id" value="{{ $activeAppointment->id }}">
                         <input type="text" name="text" id="messageInput" class="form-control me-2" placeholder="Type a message..." required>
@@ -149,24 +149,11 @@
 </div>
 @endsection
 
-@section('scripts')
+@section('font-js')
 <script>
     const appointmentId = "{{ $activeAppointment->id ?? '' }}";
 
-    function fetchMessages() {
-        if (!appointmentId) return;
-        $.get('/patient/chat/messages/' + appointmentId, function (data) {
-            let html = '';
-            data.forEach(msg => {
-                const className = msg.sender === 'patient' ? 'sent' : 'received';
-                html += `<div class="chat-message ${className}">${msg.text}</div>`;
-            });
-            $('#chat-box').html(html);
-        });
-    }
-
-    fetchMessages();                     // Initial load
-    setInterval(fetchMessages, 3000);    // Real-time polling every 3 seconds
+    alert('info', 'Chat with your doctor', 'You can send messages to your doctor here.');
 
     $('#chatForm').on('submit', function (e) {
         e.preventDefault();
@@ -188,5 +175,30 @@
             }
         });
     });
+
+    function fetchMessages() {
+        if (!appointmentId) return;
+        // $.get('/patient/chat/messages/' + appointmentId, function (data) {
+        //     let html = '';
+        //     data.forEach(msg => {
+        //         const className = msg.sender === 'patient' ? 'sent' : 'received';
+        //         html += `<div class="chat-message ${className}">${msg.text}</div>`;
+        //     });
+        //     $('#chat-box').html(html);
+        // });
+        $.get('/patient/chat/messages/' + appointmentId, function (data) {
+            let html = '';
+            data.forEach(msg => {
+                const className = msg.sender === 'patient' ? 'sent' : 'received';
+                html += `<div class="chat-message ${className}">${msg.text}</div>`;
+            });
+            $('#chat-box').html(html);
+            // Auto-scroll to the latest message
+            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+        });
+    }
+
+    fetchMessages();                     // Initial load
+    setInterval(fetchMessages, 3000);    // Real-time polling every 3 seconds
 </script>
 @endsection

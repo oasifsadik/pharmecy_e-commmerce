@@ -52,7 +52,7 @@ class PatientChatController extends Controller
 
         $appointment = Appointment::findOrFail($request->patient_id);
 
-        ChatMessage::create([
+        $message = ChatMessage::create([
             'appointment_id' => $appointment->id,
             'doctor_id' => $appointment->doctor_id,
             'user_id' => $appointment->user_id,
@@ -60,7 +60,7 @@ class PatientChatController extends Controller
             'text' => $request->text,
         ]);
 
-        return response()->json(['status' => 'success']);
+        return response()->json(['status' => 'success' ,'data' => $message]);
     }
 
     public function fetchMessages($appointmentId)
